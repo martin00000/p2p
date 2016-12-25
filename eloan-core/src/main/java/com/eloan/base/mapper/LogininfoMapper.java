@@ -1,6 +1,8 @@
 package com.eloan.base.mapper;
 
 import com.eloan.base.domain.Logininfo;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 public interface LogininfoMapper {
@@ -43,4 +45,11 @@ public interface LogininfoMapper {
      * @mbggenerated Sun Dec 25 02:47:10 CST 2016
      */
     int updateByPrimaryKey(Logininfo record);
+
+    /**
+     * 根据用户名查询用户是否存在
+     * @param username
+     * @return
+     */
+    int selectCountByUserName(@Param("username") String username);
 }
