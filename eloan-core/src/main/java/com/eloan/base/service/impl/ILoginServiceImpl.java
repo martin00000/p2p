@@ -19,10 +19,11 @@ public class ILoginServiceImpl implements ILoginService {
     private LogininfoMapper logininfoMapper;
 
     @Override
-    public void register(String username, String password) {
+    public void register(String username, String password)
+            throws LogicException {
         int count = logininfoMapper.selectCountByUserName(username);
         // 用户不存在
-        if (count <= 0){
+        if (count <= 0) {
             Logininfo logininfo = new Logininfo();
             logininfo.setUsername(username);
             logininfo.setPassword(MD5.encode(password));
@@ -32,5 +33,14 @@ public class ILoginServiceImpl implements ILoginService {
             new LogicException("用户名已经存在");
         }
 
+    }
+
+    @Override
+    public Boolean CheckUsername(String username) {
+        int count = logininfoMapper.selectCountByUserName(username);
+        if (count > 0) {
+            return false;
+        }
+        return true;
     }
 }

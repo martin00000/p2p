@@ -10,6 +10,9 @@ public class LogicException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
+    /*
+
+     */
     private Integer errCode;
 
     public Integer getErrCode(){
