@@ -9,8 +9,6 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <import resource="classpath:spring/spring-dao.xml"/>
-    <import resource="classpath:spring/spring-service.xml"/>
     <!-- 配置SpringMVC -->
     <!-- 1.开启SpringMVC注解模式 -->
 

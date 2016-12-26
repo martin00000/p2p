@@ -24,7 +24,7 @@ public class RejisterController extends BaseController {
     @Autowired
     private ILoginService iLoginService;
 
-    @RequestMapping(value = "rejister", method = RequestMethod.POST)
+    @RequestMapping(value = "register", method = RequestMethod.POST)
     @ResponseBody
     public ResultJSON register(String username, String password) {
         try {
