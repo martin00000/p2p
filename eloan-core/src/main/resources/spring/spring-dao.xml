@@ -66,7 +66,7 @@ http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springfr
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
 
         <!-- 给出扫描DAO接口包 -->
-        <property name="basePackage" value="com.eloan.base.mapper"/>
+        <property name="basePackage" value="com.eloan.base.mapper;com.eloan.business.mapper"/>
 
     </bean>
 </beans>
