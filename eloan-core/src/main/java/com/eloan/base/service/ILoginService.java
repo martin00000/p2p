@@ -1,6 +1,7 @@
 package com.eloan.base.service;
 
 import com.eloan.base.Exception.LogicException;
+import com.eloan.base.domain.Logininfo;
 
 /**
  * 登录注册
@@ -21,4 +22,12 @@ public interface ILoginService {
      * @return
      */
     Boolean CheckUsername(String username);
+
+    /**
+     * 登录
+     * @param username
+     * @param password
+     * @return
+     */
+    Logininfo login(String username, String password);
 }

@@ -55,11 +55,6 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>eloan-uiweb</servlet-name>
-        <!-- 配置一个伪静态的url拦截形式 -->
-        <url-pattern>*.html</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>eloan-uiweb</servlet-name>
         <url-pattern>*.do</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -52,4 +52,12 @@ public interface LogininfoMapper {
      * @return
      */
     int selectCountByUserName(@Param("username") String username);
+
+    /**
+     * 根据用户名和密码查找用户
+     * @param username
+     * @param password
+     * @return
+     */
+    Logininfo selectByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
 }
