@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * 后台系统登录
  *
@@ -24,10 +26,11 @@ public class LoginController extends BaseController {
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
     @ResponseBody
-    public ResultJSON login(String username, String password) {
+    public ResultJSON login(String username, String password, HttpServletRequest request) {
         ResultJSON json = new ResultJSON(true);
+        String ip = request.getRemoteAddr();
         try {
-            Logininfo logininfo = loginService.login(username, password, Logininfo.USERTYPE_SYSTEM);
+            Logininfo logininfo = loginService.login(username, password, Logininfo.USERTYPE_SYSTEM, ip);
             if(logininfo == null)
                 throw new LogicException("用户名密码错误", -130);
         } catch (Exception e) {

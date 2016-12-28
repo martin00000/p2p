@@ -20,22 +20,63 @@ public class IpLog extends BaseDomain {
     private int loginType; //登录用户类型(等同于LoginInfo 中的userType)
     private Date loginTime=new Date();
 
-    public String getDisplayState() {
-        return this.loginState == LOGINSTATE_FAILD ? "登录失败" : "登录成功";
-    }
-
     public IpLog() {
         super();
     }
-
-    public IpLog(String username, Date loginTime, String ip, int loginType,
-                 Long loginInfoId) {
+    public IpLog(String ip, int loginState, String userName, Long loginInfoId, int loginType) {
         super();
-        this.username = username;
-        this.loginTime = loginTime;
         this.ip = ip;
-        this.loginState = IpLog.LOGINSTATE_FAILD;
-        this.loginType = loginType;
+        this.loginState = loginState;
+        this.username = userName;
         this.loginInfoId = loginInfoId;
+        this.loginType = loginType;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public int getLoginState() {
+        return loginState;
+    }
+
+    public void setLoginState(int loginState) {
+        this.loginState = loginState;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Long getLoginInfoId() {
+        return loginInfoId;
+    }
+
+    public void setLoginInfoId(Long loginInfoId) {
+        this.loginInfoId = loginInfoId;
+    }
+
+    public int getLoginType() {
+        return loginType;
+    }
+
+    public void setLoginType(int loginType) {
+        this.loginType = loginType;
+    }
+
+    public Date getLoginTime() {
+        return loginTime;
+    }
+
+    public void setLoginTime(Date loginTime) {
+        this.loginTime = loginTime;
     }
 }

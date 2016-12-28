@@ -29,7 +29,7 @@ public interface ILoginService {
      * @param password
      * @return
      */
-    Logininfo login(String username, String password, Integer userType);
+    Logininfo login(String username, String password, Integer userType, String ip);
 
     /**
      * 判断是否有管理员账号

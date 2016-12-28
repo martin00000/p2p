@@ -1,7 +1,9 @@
 package com.eloan.base.service.impl;
 
 import com.eloan.base.Exception.LogicException;
+import com.eloan.base.domain.IpLog;
 import com.eloan.base.domain.Logininfo;
+import com.eloan.base.mapper.IpLogMapper;
 import com.eloan.base.mapper.LogininfoMapper;
 import com.eloan.base.service.ILoginService;
 import com.eloan.base.util.MD5;
@@ -31,6 +33,9 @@ public class ILoginServiceImpl implements ILoginService {
     @Autowired
     private UserinfoMapper userinfoMapper;
 
+    @Autowired
+    private IpLogMapper ipLogMapper;
+
     @Override
     @Transactional
     public void register(String username, String password)
@@ -54,7 +59,6 @@ public class ILoginServiceImpl implements ILoginService {
             // 创建用户相关的用户信息
             Userinfo userinfo = Userinfo.empty(logininfo.getId());
             userinfoMapper.insert(userinfo);
-
         } else {
             new LogicException("用户名已经存在");
         }
@@ -71,12 +75,18 @@ public class ILoginServiceImpl implements ILoginService {
     }
 
     @Override
-    public Logininfo login(String username, String password, Integer userType) {
+    public Logininfo login(String username, String password, Integer userType, String ip) {
         password = MD5.encode(password);
+        IpLog log = new IpLog(ip, IpLog.LOGIN_FAIL, username, null, userType);
         Logininfo logininfo = logininfoMapper.selectByUsernameAndPassword(username, password, userType);
         // 将logininfo对象放到session中
-        if (logininfo == null)
+        if (logininfo != null) {
             UserContext.setLogininfo(logininfo);
+            log.setLoginInfoId(logininfo.getId());
+            // 讲登录状态改为成功
+            log.setLoginState(IpLog.LOGIN_SUCCESS);
+        }
+        ipLogMapper.insert(log);
         return logininfo;
     }
 
@@ -96,8 +106,7 @@ public class ILoginServiceImpl implements ILoginService {
         logininfo.setPassword(MD5.encode(BidConst.DEFAULT_ADMIN_PASSWORD));
         logininfo.setUserType(Logininfo.USERTYPE_SYSTEM);
         logininfo.setState(Logininfo.STATE_NORMAL);
-        logininfo.setAdmin(true);
-        // 插入数据库
+        logininfo.setAdmin(true);// 是超级管理员
         logininfoMapper.insert(logininfo);
     }
 }

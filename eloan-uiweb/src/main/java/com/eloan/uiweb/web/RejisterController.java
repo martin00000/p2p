@@ -1,6 +1,7 @@
 package com.eloan.uiweb.web;
 
 import com.eloan.base.Exception.LogicException;
+import com.eloan.base.domain.Logininfo;
 import com.eloan.base.service.ILoginService;
 import com.eloan.base.util.ResultJSON;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class RejisterController extends BaseController {
     @ResponseBody
     public ResultJSON checkUsername(String username) {
         ResultJSON json = new ResultJSON();
-        json.setSuccess(iLoginService.CheckUsername(username));
+        json.setSuccess(iLoginService.CheckUsername(username, Logininfo.USERTYPE_NORMAL));
         return json;
     }
 
