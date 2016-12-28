@@ -5,3 +5,6 @@ CREATE TABLE `logininfo` (
   `state` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+  ALTER TABLE logininfo ADD (`usertype` TINYINT(4) NOT NULL DEFAULT 0 COMMENT '用户类型：0（平台用户）1（后台操作员）',
+    `admin` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '是否为管理员:1是，0不是');

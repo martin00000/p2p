@@ -21,7 +21,7 @@ public interface ILoginService {
      * @param username
      * @return
      */
-    Boolean CheckUsername(String username);
+    Boolean CheckUsername(String username, Integer userType);
 
     /**
      * 登录
@@ -29,5 +29,17 @@ public interface ILoginService {
      * @param password
      * @return
      */
-    Logininfo login(String username, String password);
+    Logininfo login(String username, String password, Integer userType);
+
+    /**
+     * 判断是否有管理员账号
+     * @return
+     */
+    boolean hasAdminUser();
+
+    /**
+     * 创建默认的管理员账号
+     */
+    void creatDefaultAdminUser();
+
 }

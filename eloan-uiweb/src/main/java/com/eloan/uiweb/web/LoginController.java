@@ -25,10 +25,9 @@ public class LoginController extends BaseController {
     @RequestMapping(value = "login", method = RequestMethod.POST)
     @ResponseBody
     public ResultJSON login(String username, String password) {
-        ResultJSON json = new ResultJSON();
-
+        ResultJSON json = new ResultJSON(true);
         try {
-            Logininfo logininfo = loginService.login(username, password);
+            Logininfo logininfo = loginService.login(username, password, Logininfo.USERTYPE_NORMAL);
             if(logininfo == null)
                 throw new LogicException("用户名密码错误", -130);
         } catch (Exception e) {

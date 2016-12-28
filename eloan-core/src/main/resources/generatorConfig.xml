@@ -48,7 +48,6 @@
 
 			<!-- for MyBatis3 / MyBatis3Simple 是否创建一个不可变的类，如果为true， 那么MBG会创建一个没有setter方法的类，取而代之的是类似constructorBased的类 -->
 			<property name="immutable" value="false" />
-
 			<!-- 设置是否在getter方法中，对String类型字段调用trim()方法 -->
 			<property name="trimStrings" value="true" />
 		</javaModelGenerator>
@@ -78,23 +77,12 @@
 			<!-- 可以为所有生成的接口添加一个父接口，但是MBG只负责生成，不负责检查 <property name="rootInterface" 
 				value=""/> -->
 		</javaClientGenerator>
-
-		<!--<table tableName="logininfo">-->
-			<!--&lt;!&ndash; 参考 javaModelGenerator 的 constructorBased属性 &ndash;&gt;-->
-			<!--<property name="constructorBased" value="false" />-->
-			<!--<generatedKey column="id" sqlStatement="JDBC" />-->
-		<!--</table>-->
-		<table tableName="systemdictionary">
+		<table tableName="userinfo">
 			<!-- 参考 javaModelGenerator 的 constructorBased属性 -->
 			<property name="constructorBased" value="false" />
+			<property name="useActualColumnNames" value="true" />
 			<generatedKey column="id" sqlStatement="JDBC" />
 		</table>
-		<table tableName="systemdictionaryitem">
-			<!-- 参考 javaModelGenerator 的 constructorBased属性 -->
-			<property name="constructorBased" value="false" />
-			<generatedKey column="id" sqlStatement="JDBC" />
-		</table>
-
 	</context>
 
 </generatorConfiguration>

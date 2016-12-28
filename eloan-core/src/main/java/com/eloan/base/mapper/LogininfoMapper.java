@@ -48,16 +48,26 @@ public interface LogininfoMapper {
 
     /**
      * 根据用户名查询用户是否存在
+     *
      * @param username
      * @return
      */
-    int selectCountByUserName(@Param("username") String username);
+    int selectCountByUserName(@Param("username") String username, @Param("userType") Integer userType);
 
     /**
      * 根据用户名和密码查找用户
+     *
      * @param username
      * @param password
      * @return
      */
-    Logininfo selectByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
+    Logininfo selectByUsernameAndPassword(@Param("username") String username, @Param("password") String password, @Param("userType") Integer userType);
+
+    /**
+     * 根据用户类型统计用户数量
+     *
+     * @param userType
+     * @return
+     */
+    int selectCountByUserType(int userType);
 }
