@@ -14,7 +14,7 @@
 				$('[name="marriage.id"] option[value="${(userinfo.marriage.id)!''}"]').attr("selected","selected");
 				$('[name="kidCount.id"] option[value="${(userinfo.kidCount.id)!''}"]').attr("selected","selected");
 				$('[name="houseCondition.id"] option[value="${(userinfo.houseCondition.id)!''}"]').attr("selected","selected");
-				
+
 				$("#userInfoForm").ajaxForm({
 					beforeSubmit:function(){
 						$("#submitBtn").button('loading');
@@ -29,16 +29,16 @@
 					}
 				});
 			});
-		</script>		
+		</script>
 	</head>
 	<body>
 		<!-- 网页顶部导航 -->
 		<#include "common/head-tpl.ftl" />
-		
+
 		<#assign currentNav="account"/>
 		<!-- 网页导航 -->
 		<#include "common/navbar-tpl.ftl" />
-		
+
 		<div class="container">
 			<div class="row">
 				<!--导航菜单-->
@@ -76,13 +76,13 @@
 									</p>
 								</div>
 							</div>
-							
+
 							<div class="form-group">
 								<label class="col-sm-4 control-label">
 									身份证号码
 								</label>
 								<div class="col-sm-8">
-									<p class="form-control-static">	
+									<p class="form-control-static">
 										<#if (userinfo.realAuth)>
 											${userinfo.idNumber}
 										<#else>
@@ -92,7 +92,7 @@
 									</p>
 								</div>
 							</div>
-							
+
 							<div class="form-group">
 								<label class="col-sm-4 control-label">
 									手机号码
@@ -101,7 +101,7 @@
 									<label style="width: 250px;" class="form-control">${(userinfo.phoneNumber)!''}</label>
 								</div>
 							</div>
-							
+
 							<div class="form-group">
 								<label class="col-sm-4 control-label">
 									个人学历
@@ -112,8 +112,8 @@
 									</select>
 								</div>
 							</div>
-							
-							
+
+
 							<div class="form-group">
 								<label class="col-sm-4 control-label">
 									月收入
@@ -124,7 +124,7 @@
 									</select>
 								</div>
 							</div>
-							
+
 							<div class="form-group">
 								<label class="col-sm-4 control-label">
 									婚姻情况
@@ -157,7 +157,7 @@
 									</select>
 								</div>
 							</div>
-							
+
 							<div class="form-group">
 								<button id="submitBtn" type="submit" class="btn btn-primary col-sm-offset-5" data-loading-text="数据保存中" autocomplate="off">
 									保存数据
@@ -167,8 +167,8 @@
 					</div>
 				</div>
 			</div>
-		</div>		
-		
+		</div>
+
 		<#include "common/footer-tpl.ftl" />
 	</body>
 </html>

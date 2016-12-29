@@ -50,4 +50,13 @@
 
     <!-- 4.扫描web相关的bean -->
     <context:component-scan base-package="com.eloan.uiweb.web"/>
+    
+    <!--拦截器-->
+    <mvc:interceptors>
+        <!-- 拦截没有登录的用户 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.eloan.uiweb.interceptor.LoginCheckInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>

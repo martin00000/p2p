@@ -1,6 +1,7 @@
 package com.eloan.base.util;
 
 import com.eloan.base.domain.Logininfo;
+import com.eloan.business.domain.VerifyCode;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -15,6 +16,8 @@ public class UserContext {
 
     public static final String LOGININFO_IN_SESSION = "logininfo";
 
+    public static final String VERIFYCODE_IN_SESSION = "verifycode";
+
     private static HttpServletRequest getRequest() {
       return ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
     }
@@ -25,5 +28,13 @@ public class UserContext {
 
     public static void setLogininfo(Logininfo logininfo) {
         getRequest().getSession().setAttribute(LOGININFO_IN_SESSION, logininfo);
+    }
+
+    public static void setVerifyCode(VerifyCode vc) {
+        getRequest().getSession().setAttribute(VERIFYCODE_IN_SESSION, vc);
+    }
+    public static VerifyCode getVerifyCode() {
+        return
+                (VerifyCode)getRequest().getSession().getAttribute(VERIFYCODE_IN_SESSION);
     }
 }

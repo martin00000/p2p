@@ -1,5 +1,6 @@
 package com.eloan.uiweb.web;
 
+import com.eloan.base.annotation.RequireLogin;
 import com.eloan.base.domain.Logininfo;
 import com.eloan.base.util.UserContext;
 import com.eloan.business.service.IAccountService;
@@ -24,6 +25,7 @@ public class PersonalController extends BaseController {
     @Autowired
     private IAccountService accountService;
 
+    @RequireLogin
     @RequestMapping("/personal")
     public String toPage(Model model) {
         Logininfo logininfo = UserContext.getLogininfo();
@@ -34,6 +36,13 @@ public class PersonalController extends BaseController {
             return "index";
         }
         return "personal";
+    }
+
+    @RequestMapping("/sendVerifyCode")
+    public String sendVerifyCode(Model model) {
+        Logininfo current = UserContext.getLogininfo();
+        System.out.println("发送手机验证码");
+        return "true";
     }
 
 

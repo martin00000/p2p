@@ -7,7 +7,7 @@ http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springfr
     <!-- 配置整合Mybatis过程 -->
     <context:annotation-config></context:annotation-config>
     <!-- 1.配置数据库相关参数 properties的属性： ${url} -->
-    <context:property-placeholder location="classpath:properties/jdbc.properties"/>
+    <context:property-placeholder location="classpath:properties/*.properties"/>
 
     <!-- 2.数据库连接池 -->
     <!--     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
