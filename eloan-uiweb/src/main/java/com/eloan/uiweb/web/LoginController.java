@@ -29,6 +29,7 @@ public class LoginController extends BaseController {
     public ResultJSON login(String username, String password, HttpServletRequest request) {
         ResultJSON json = new ResultJSON(true);
         String ip = request.getRemoteAddr();
+        ip = ip.equals("0:0:0:0:0:0:0:1")?"127.0.0.1":ip;
         try {
             Logininfo logininfo = loginService.login(username, password, Logininfo.USERTYPE_NORMAL, ip);
             if (logininfo == null)

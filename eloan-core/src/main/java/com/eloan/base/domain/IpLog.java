@@ -32,6 +32,10 @@ public class IpLog extends BaseDomain {
         this.loginType = loginType;
     }
 
+    public String getDisplayState() {
+        return loginState == LOGIN_FAIL ? "登录失败" : "登录成功";
+    }
+
     public String getIp() {
         return ip;
     }

@@ -2,6 +2,7 @@ package com.eloan.base.mapper;
 
 
 import com.eloan.base.domain.IpLog;
+import com.eloan.base.query.IpLogQueryObject;
 
 import java.util.List;
 
@@ -45,4 +46,11 @@ public interface IpLogMapper {
      * @mbggenerated Wed Dec 28 22:20:50 CST 2016
      */
     int updateByPrimaryKey(IpLog record);
+
+    /**
+     * 根据条件查询登录日志
+     * @param qo
+     * @return
+     */
+    List<IpLog> queryByCondition(IpLogQueryObject qo);
 }
