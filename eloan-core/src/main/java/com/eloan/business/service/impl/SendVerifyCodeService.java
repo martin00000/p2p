@@ -6,15 +6,12 @@ import com.eloan.base.util.HttpClientUtil;
 import com.eloan.base.util.UserContext;
 import com.eloan.business.domain.VerifyCode;
 import com.eloan.business.service.ISendVerifyCodeService;
-import com.sun.tools.javac.jvm.ByteCodes;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.UUID;
-
-import static com.sun.tools.javac.jvm.ByteCodes.ret;
 
 @Service
 public class SendVerifyCodeService implements ISendVerifyCodeService {
@@ -41,28 +38,33 @@ public class SendVerifyCodeService implements ISendVerifyCodeService {
     }
 
     @Override
-    public void sendVerifyCode(String phoneNumber) {
+    public void sendVerifyCode(String phoneNumber) throws LogicException {
         if (checkUserCanSendVerifyCode()) {
-            String randomCode = UUID.randomUUID().toString().substring(0, 4);
-            StringBuilder sb = new StringBuilder(100).append("您的手机验证码为:")
-                    .append(randomCode).append(",请在3分钟之内输入有效!");
+            try {
+                String randomCode = UUID.randomUUID().toString().substring(0, 4);
+                StringBuilder sb = new StringBuilder(100).append("您的手机验证码为:")
+                        .append(randomCode).append(",请在3分钟之内输入有效!");
 
-            HashMap<String, String> params = new HashMap<>();
-            params.put("username", username);
-            params.put("password", password);
-            params.put("apikey", apikey);
-            params.put("mobile", phoneNumber.toString());
-            params.put("content", sb.toString());
-            String ret = HttpClientUtil.doPost(url, params);
-            if ("success" .equals(ret.substring(0, ret.indexOf(":")))) {
-                VerifyCode vc = new VerifyCode(phoneNumber, randomCode, new Date(),
-                        sb.toString());
-                UserContext.setVerifyCode(vc);
-            } else {
+                HashMap<String, String> params = new HashMap<>();
+                params.put("username", username);
+                params.put("password", password);
+                params.put("apikey", apikey);
+                params.put("mobile", phoneNumber.toString());
+                params.put("content", sb.toString());
+                String ret = HttpClientUtil.doPost(url, params);
+                if ("success" .equals(ret.substring(0, ret.indexOf(":")))) {
+                    VerifyCode vc = new VerifyCode(phoneNumber, randomCode, new Date(),
+                            sb.toString());
+                    UserContext.setVerifyCode(vc);
+                } else {
+                    throw new LogicException("短信发送失败，请联系平台管理员！");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
                 throw new LogicException("短信发送失败，请联系平台管理员！");
             }
         } else {
-            throw new RuntimeException("你发送短信的频率太高");
+            throw new LogicException("你发送短信的频率太高");
         }
     }
 

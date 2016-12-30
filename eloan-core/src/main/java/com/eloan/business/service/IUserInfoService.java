@@ -18,4 +18,23 @@ public interface IUserInfoService {
      * @return
      */
     Userinfo getUserInfo(long id);
+
+    /**
+     * 绑定手机号
+     * @param phoneNumber
+     * @param verifyCode
+     */
+    void bindPhone(String phoneNumber, String verifyCode);
+
+    /**
+     * 发送邮件
+     * @param email
+     */
+    void sendBindEmail(String email);
+
+    /**
+     * 验证邮件
+     * @param checkCode
+     */
+    void bindMailVerify(String checkCode);
 }

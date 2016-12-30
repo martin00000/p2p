@@ -171,7 +171,7 @@
 											</div>
 											<div class="el-accoun-auth-right">
 												<h5>手机认证</h5>
-												<#if userinfo.isBindPhone>
+												<#if userinfo.phoneNumber != null>
 												<p>
 													已认证
 													<a href="#">查看</a>
@@ -194,7 +194,7 @@
 											</div>
 											<div class="el-accoun-auth-right">
 												<h5>邮箱认证</h5>
-												<#if userinfo.isBindEmail>
+												<#if userinfo.email != null>
 												<p>
 													已认证
 													<a href="#">查看</a>

@@ -41,6 +41,7 @@
         <fastdfs.version>5.0.4</fastdfs.version>
         <hibernate.version>5.1.2.Final</hibernate.version>
         <lombok.version>1.16.6</lombok.version>
+        <mail.version>1.4.7</mail.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -243,8 +244,12 @@
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
             </dependency>
-
-
+            <!-- java邮件 -->
+            <dependency>
+                <groupId>javax.mail</groupId>
+                <artifactId>mail</artifactId>
+                <version>${mail.version}</version>
+            </dependency>
         </dependencies>
 
     </dependencyManagement>
