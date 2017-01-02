@@ -2,6 +2,7 @@ package com.eloan.base.mapper;
 
 
 import com.eloan.base.domain.SystemDictionaryItem;
+import com.eloan.base.query.SystemDictionaryQueryObject;
 
 import java.util.List;
 
@@ -45,4 +46,11 @@ public interface SystemdictionaryitemMapper {
      * @mbggenerated Tue Dec 27 17:58:30 CST 2016
      */
     int updateByPrimaryKey(SystemDictionaryItem record);
+
+    /**
+     * 根据title和parentId查询
+     * @param qo
+     * @return
+     */
+    List<SystemDictionaryItem> selectByTitleAndParentId(SystemDictionaryQueryObject qo);
 }

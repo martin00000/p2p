@@ -1,6 +1,7 @@
 package com.eloan.base.mapper;
 
 import com.eloan.base.domain.SystemDictionary;
+import com.eloan.base.query.SystemDictionaryQueryObject;
 
 import java.util.List;
 
@@ -44,4 +45,11 @@ public interface SystemdictionaryMapper {
      * @mbggenerated Tue Dec 27 17:57:22 CST 2016
      */
     int updateByPrimaryKey(SystemDictionary record);
+
+    /**
+     * 根据sn和title查询
+     * @param qo
+     * @return
+     */
+    List<SystemDictionary> selectBySnOrTitle(SystemDictionaryQueryObject qo);
 }

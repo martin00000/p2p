@@ -1,6 +1,10 @@
 package com.eloan.base.domain;
 
+import com.eloan.base.util.JsonUtils;
 import org.apache.ibatis.type.Alias;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 数据字典
@@ -37,5 +41,14 @@ public class SystemDictionary extends BaseDomain {
 
 	public void setIntro(String intro) {
 		this.intro = intro;
+	}
+
+	public String getJsonString() {
+		Map<String, Object> m = new HashMap<String, Object>();
+		m.put("id", id);
+		m.put("sn", sn);
+		m.put("title", title);
+		m.put("intro", intro);
+		return JsonUtils.objectToJson(m);
 	}
 }

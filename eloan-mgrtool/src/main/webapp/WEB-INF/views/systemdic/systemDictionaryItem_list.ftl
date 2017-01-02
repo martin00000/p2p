@@ -10,7 +10,13 @@
 	<script type="text/javascript" src="/js/plugins/jquery.twbsPagination.min.js"></script>
 	
 	<script type="text/javascript">
+        var submitForm = function (d_form){
+            d_form.formSerialize();
+            $.post("/systemDictionaryItem_list.do",d_form.formSerialize());
+        }
+
 		$(function(){
+            var parentid  = 1;
 			$.extend($.fn.twbsPagination.defaults, {
 				first : "首页",
 				prev : "上一页",
@@ -30,8 +36,9 @@
 			
 			$("[id^=pg_]").click(function(){
 				var pid=$(this).attr("id").substring(3);
-				$("#parentId").val(pid);
+                parentid = pid;
 				$("#currentPage").val(1);
+                $("#parentId").val(pid);
 				$("#searchForm").submit();
 			});
 			
@@ -102,7 +109,7 @@
 				<div class="col-sm-12">
 					<!-- 提交分页的表单 -->
 					<form id="searchForm" class="form-inline" method="post" action="/systemDictionaryItem_list.do">
-						<input type="hidden" id="currentPage" name="currentPage" value=""/>
+						<input type="hidden" id="currentPage" name="currentPage" value="${(qo.currentPage)!''}"/>
 						<input type="hidden" id="parentId" name="parentId" value="${(qo.parentId)!''}" />
 						<div class="form-group">
 						    <label>关键字</label>

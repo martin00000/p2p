@@ -8,7 +8,7 @@
       This element was generated on Wed Dec 28 10:41:02 CST 2016.
     -->
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="parentId" jdbcType="BIGINT" property="parentid" />
+    <result column="parentId" jdbcType="BIGINT" property="parentId" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="tvalue" jdbcType="VARCHAR" property="tvalue" />
     <result column="sequence" jdbcType="TINYINT" property="sequence" />
@@ -31,7 +31,7 @@
     -->
     insert into systemdictionaryitem (parentId, title, tvalue, 
       sequence, intro)
-    values (#{parentid,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{tvalue,jdbcType=VARCHAR}, 
+    values (#{parentId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{tvalue,jdbcType=VARCHAR},
       #{sequence,jdbcType=TINYINT}, #{intro,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.eloan.base.domain.SystemDictionaryItem">
@@ -41,7 +41,7 @@
       This element was generated on Wed Dec 28 10:41:02 CST 2016.
     -->
     update systemdictionaryitem
-    set parentId = #{parentid,jdbcType=BIGINT},
+    set parentId = #{parentId,jdbcType=BIGINT},
       title = #{title,jdbcType=VARCHAR},
       tvalue = #{tvalue,jdbcType=VARCHAR},
       sequence = #{sequence,jdbcType=TINYINT},
@@ -66,5 +66,18 @@
     -->
     select id, parentId, title, tvalue, sequence, intro
     from systemdictionaryitem
+  </select>
+
+  <select id="selectByTitleAndParentId" resultMap="BaseResultMap">
+    select id, parentId, title, tvalue, sequence, intro
+    from systemdictionaryitem
+    <where>
+      <if test="parentId!=-1">
+        AND parentId = #{parentId}
+      </if>
+      <if test="keyword!=null">
+        AND title LIKE concat('%',#{keyword},'%')
+      </if>
+    </where>
   </select>
 </mapper>
