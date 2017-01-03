@@ -118,4 +118,17 @@ public class UserInfoServiceImpl implements IUserInfoService {
         }
         throw new LogicException("验证码无效！");
     }
+
+    @Override
+    public void updateBasicInfo(Userinfo userinfo) {
+        Logininfo logininfo = UserContext.getLogininfo();
+        Userinfo ui = userinfoMapper.selectByPrimaryKey(logininfo.getId());
+        ui.setEducationBackground(userinfo.getEducationBackground());
+        ui.setHouseCondition(userinfo.getHouseCondition());
+        ui.setIncomeGrade(userinfo.getIncomeGrade());
+        ui.setKidCount(userinfo.getKidCount());
+        ui.setMarriage(userinfo.getMarriage());
+        ui.setBitState(BitStatesUtils.OP_BASE_INFO);
+        userinfoMapper.updateByPrimaryKey(ui);
+    }
 }

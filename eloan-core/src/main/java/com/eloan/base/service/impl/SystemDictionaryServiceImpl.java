@@ -69,4 +69,9 @@ public class SystemDictionaryServiceImpl implements ISystemDictionaryService {
             systemdictionaryitemMapper.insert(dicItem);
         }
     }
+
+    @Override
+    public List<SystemDictionaryItem> listOption(String sn) {
+        return  systemdictionaryitemMapper.selectBySnOfSdic(sn);
+    }
 }

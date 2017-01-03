@@ -45,4 +45,11 @@ public interface ISystemDictionaryService {
      * @param item
      */
     void saveOrUpdateItem(SystemDictionaryItem item);
+
+    /**
+     * 查询出下拉选项
+     * @param sn
+     * @return
+     */
+    List<SystemDictionaryItem> listOption(String sn);
 }

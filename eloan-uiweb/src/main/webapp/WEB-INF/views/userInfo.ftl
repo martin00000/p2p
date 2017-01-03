@@ -120,7 +120,7 @@
 								</label>
 								<div class="col-sm-8">
 									<select class="form-control" name="incomeGrade.id" style="width: 180px" autocomplate="off" >
-										<@loadDictionary sn="incomeGrade" />
+										<@loadDictionary sn="incomeGrade"/>
 									</select>
 								</div>
 							</div>

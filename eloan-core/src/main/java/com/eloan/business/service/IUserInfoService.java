@@ -37,4 +37,10 @@ public interface IUserInfoService {
      * @param checkCode
      */
     void bindMailVerify(String checkCode);
+
+    /**
+     * 保存用户信息
+     * @param userinfo
+     */
+    void updateBasicInfo(Userinfo userinfo);
 }

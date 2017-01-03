@@ -53,4 +53,13 @@ public interface SystemdictionaryitemMapper {
      * @return
      */
     List<SystemDictionaryItem> selectByTitleAndParentId(SystemDictionaryQueryObject qo);
+
+    /**
+     * 根据SystemDictionary的sn查询SystemDictionaryItem
+     * @param sn
+     * @return
+     */
+    List<SystemDictionaryItem> selectBySnOfSdic(String sn);
+
+
 }

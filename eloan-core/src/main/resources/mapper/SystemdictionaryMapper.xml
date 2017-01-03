@@ -73,7 +73,5 @@
                 concat('%',#{keyword},'%'))
             </if>
         </where>
-
     </select>
-
 </mapper>
