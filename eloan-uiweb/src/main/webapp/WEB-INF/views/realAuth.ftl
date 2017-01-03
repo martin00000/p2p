@@ -52,6 +52,7 @@
 			}
 		</style>
 		<script type="text/javascript" src="/js/plugins/uploadify/jquery.uploadify.min.js"></script>
+        <script type="text/javascript" src="/js/My97DatePicker/WdatePicker.js"></script>
 		<script type="text/javascript">
 		
 		$(function(){
@@ -94,6 +95,11 @@
 					$("#uploadImage2").val(data);
 				}
 			});
+            $("#birthDate").click(function(){
+                WdatePicker({
+                    dateFmt:"yyyy-MM-dd"
+                });
+            });
 		});
 		</script>
 	</head>
@@ -151,7 +157,7 @@
 						        <div class="form-group">
 						        	<label class="col-sm-4  control-label" for="birthdate">出生日期</label>
 					        		<div class="col-sm-8">
-						        		<input id="birthDate"  class="form-control" name="birthDate" type="text">
+						        		<input id="birthDate"  class="form-control birthDate" name="birthDate" type="text" value="">
 						        	</div>
 						        </div>
 						        <div class="form-group">

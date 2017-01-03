@@ -59,7 +59,7 @@ public class UserInfoServiceImpl implements IUserInfoService {
             Userinfo userinfo = userinfoMapper.selectByPrimaryKey(logininfo.getId());
             // 手机没有绑定
             if (!userinfo.getIsBindPhone()) {
-                userinfo.setBitState(BitStatesUtils.OP_BIND_PHONE);
+                userinfo.setBitState(BitStatesUtils.OP_BIND_PHONE + userinfo.getBitState());
                 userinfo.setPhoneNumber(phoneNumber);
                 update(userinfo);
             }
@@ -108,7 +108,7 @@ public class UserInfoServiceImpl implements IUserInfoService {
                 if (now.before(mv.getDeadline())) {
                     Userinfo userinfo = userinfoMapper.selectByPrimaryKey(mv.getUserinfoId());
                     if (!userinfo.getIsBindEmail()) {
-                        userinfo.setBitState(BitStatesUtils.OP_BIND_EMAIL);
+                        userinfo.setBitState(BitStatesUtils.OP_BIND_EMAIL + userinfo.getBitState());
                         userinfo.setEmail(mv.getEmail());
                         userinfoMapper.updateByPrimaryKey(userinfo);
                         return;
@@ -128,7 +128,7 @@ public class UserInfoServiceImpl implements IUserInfoService {
         ui.setIncomeGrade(userinfo.getIncomeGrade());
         ui.setKidCount(userinfo.getKidCount());
         ui.setMarriage(userinfo.getMarriage());
-        ui.setBitState(BitStatesUtils.OP_BASE_INFO);
+        ui.setBitState(BitStatesUtils.OP_BASE_INFO + ui.getBitState());
         userinfoMapper.updateByPrimaryKey(ui);
     }
 }

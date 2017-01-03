@@ -100,20 +100,23 @@ public class RealAuthServiceImpl implements IRealAuthService {
 
     public static String writePic(MultipartFile picFile) throws IOException {
         String originalFilename = picFile.getOriginalFilename();
-        String extName = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
+        String extName = originalFilename.substring(originalFilename.lastIndexOf("."));
         InputStream inputStream = null;
         BufferedInputStream bufferedInputStream = null;
         BufferedOutputStream bufferedOutputStream = null;
         try {
             inputStream = picFile.getInputStream();
             bufferedInputStream = new BufferedInputStream(inputStream);
-            bufferedOutputStream = new BufferedOutputStream(new FileOutputStream("/images/" + UUID.randomUUID() + extName));
+            String picName = UUID.randomUUID().toString();
+            File f = new File("E:/ideaworkspace/p2p/eloan-uiweb/src/main/webapp/images/" + picName + extName);
+            f.createNewFile();
+            bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(f));
             byte[] buffer = new byte[1024];
             int copySize;
             while ((copySize = bufferedInputStream.read(buffer)) > 0) {
                 bufferedOutputStream.write(buffer, 0, copySize);
             }
-            return "/images/" + UUID.randomUUID() + extName;
+            return "/images/" + picName + extName;
         } finally {
             try {
                 if (bufferedInputStream != null)
