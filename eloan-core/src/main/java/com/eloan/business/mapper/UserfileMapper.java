@@ -43,4 +43,6 @@ public interface UserfileMapper {
      * @mbggenerated Wed Jan 04 17:47:01 CST 2017
      */
     int updateByPrimaryKey(Userfile record);
+
+    List<Userfile> selectByApplierId(Long applierId, boolean noType);
 }
