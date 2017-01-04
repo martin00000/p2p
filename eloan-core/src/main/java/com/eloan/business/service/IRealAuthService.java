@@ -1,7 +1,9 @@
 package com.eloan.business.service;
 
 import com.eloan.base.Exception.LogicException;
+import com.eloan.base.query.PageResult;
 import com.eloan.business.domain.Realauth;
+import com.eloan.business.query.RealAuthQueryObject;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -33,4 +35,19 @@ public interface IRealAuthService {
      * @param realauth
      */
     void saveRealAuth(Realauth realauth);
+
+    /**
+     * 根据条件分页查询所有的实名认证信息
+     * @param qo
+     * @return
+     */
+    PageResult listRealauth(RealAuthQueryObject qo);
+
+    /**
+     * 实名认证审核
+     * @param id
+     * @param remark
+     * @param state
+     */
+    void audit(Long id, String remark, Integer state);
 }

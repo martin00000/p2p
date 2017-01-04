@@ -17,6 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Dingying
  * @create 2016-12-25 22:32
@@ -108,5 +111,10 @@ public class ILoginServiceImpl implements ILoginService {
         logininfo.setState(Logininfo.STATE_NORMAL);
         logininfo.setAdmin(true);// 是超级管理员
         logininfoMapper.insert(logininfo);
+    }
+
+    @Override
+    public List<Map<String, String>> autoComplate(String name) {
+        return logininfoMapper.autoComplateList(name);
     }
 }

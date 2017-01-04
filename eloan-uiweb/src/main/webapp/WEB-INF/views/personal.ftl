@@ -171,7 +171,7 @@
 											</div>
 											<div class="el-accoun-auth-right">
 												<h5>手机认证</h5>
-												<#if userinfo.phoneNumber??>
+												<#if userinfo.isBindPhone>
 												<p>
 													已认证
 													<a href="#">查看</a>

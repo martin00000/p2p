@@ -4,6 +4,7 @@ import com.eloan.base.domain.Logininfo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface LogininfoMapper {
     /**
@@ -70,4 +71,6 @@ public interface LogininfoMapper {
      * @return
      */
     int selectCountByUserType(int userType);
+
+    List<Map<String, String>> autoComplateList(String name);
 }

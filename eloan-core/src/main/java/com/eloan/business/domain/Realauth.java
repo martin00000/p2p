@@ -41,4 +41,60 @@ public class Realauth extends BaseAuditDomain {
 		m.put("image2", image2);
 		return JsonUtils.objectToJson(m);
 	}
+
+	public String getRealname() {
+		return realname;
+	}
+
+	public void setRealname(String realname) {
+		this.realname = realname;
+	}
+
+	public int getSex() {
+		return sex;
+	}
+
+	public void setSex(int sex) {
+		this.sex = sex;
+	}
+
+	public String getIdNumber() {
+		return idNumber;
+	}
+
+	public void setIdNumber(String idNumber) {
+		this.idNumber = idNumber;
+	}
+
+	public String getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(String birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getImage1() {
+		return image1;
+	}
+
+	public void setImage1(String image1) {
+		this.image1 = image1;
+	}
+
+	public String getImage2() {
+		return image2;
+	}
+
+	public void setImage2(String image2) {
+		this.image2 = image2;
+	}
 }

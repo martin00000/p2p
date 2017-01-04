@@ -1,6 +1,8 @@
 package com.eloan.business.mapper;
 
 import com.eloan.business.domain.Realauth;
+import com.eloan.business.query.RealAuthQueryObject;
+
 import java.util.List;
 
 public interface RealauthMapper {
@@ -43,4 +45,11 @@ public interface RealauthMapper {
      * @mbggenerated Tue Jan 03 15:07:59 CST 2017
      */
     int updateByPrimaryKey(Realauth record);
+
+    /**
+     * 根据条件查询实名认证信息
+     * @param qo
+     * @return
+     */
+    List<Realauth> selectAllByApplierTimeAndState(RealAuthQueryObject qo);
 }

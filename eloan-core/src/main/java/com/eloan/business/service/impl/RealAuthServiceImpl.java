@@ -1,12 +1,17 @@
 package com.eloan.business.service.impl;
 
 import com.eloan.base.Exception.LogicException;
+import com.eloan.base.query.PageResult;
 import com.eloan.base.util.UserContext;
 import com.eloan.business.domain.Realauth;
 import com.eloan.business.domain.Userinfo;
 import com.eloan.business.mapper.RealauthMapper;
+import com.eloan.business.mapper.UserinfoMapper;
+import com.eloan.business.query.RealAuthQueryObject;
 import com.eloan.business.service.IRealAuthService;
-import com.eloan.business.service.IUserInfoService;
+import com.eloan.business.util.BitStatesUtils;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +22,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -38,7 +44,7 @@ public class RealAuthServiceImpl implements IRealAuthService {
     private RealauthMapper realauthMapper;
 
     @Autowired
-    private IUserInfoService userinfoService;
+    private UserinfoMapper userinfoMapper;
 
     @Override
     public Realauth getRealAuth(Long id) {
@@ -94,8 +100,40 @@ public class RealAuthServiceImpl implements IRealAuthService {
         realauth.setApplier(UserContext.getLogininfo());
         realauth.setApplyTime(new Date());
         realauthMapper.insert(realauth);
-        Userinfo ui = userinfoService.getUserInfo(UserContext.getLogininfo().getId());
+        Userinfo ui = userinfoMapper.selectByPrimaryKey(UserContext.getLogininfo().getId());
         ui.setRealauthId(realauth.getId());
+        userinfoMapper.updateByPrimaryKey(ui);
+    }
+
+    @Override
+    public PageResult listRealauth(RealAuthQueryObject qo) {
+        PageHelper.startPage(qo.getCurrentPage(), qo.getPageSize());
+        List<Realauth> realauths = realauthMapper.selectAllByApplierTimeAndState(qo);
+        PageInfo<Realauth> info = new PageInfo<>(realauths);
+        long total = info.getTotal();
+        PageResult result = new PageResult((int)total, qo.getPageSize(), qo.getCurrentPage(), realauths);
+        return result;
+
+    }
+
+    @Override
+    @Transactional
+    public void audit(Long id, String remark, Integer state) {
+        Realauth realauth = realauthMapper.selectByPrimaryKey(id);
+        realauth.setState(state);
+        realauth.setAuditTime(new Date());
+        realauth.setAuditor(UserContext.getLogininfo());
+        realauth.setRemark(remark);
+        realauthMapper.updateByPrimaryKey(realauth);
+        if (state == Realauth.STATE_PASS) {
+            Userinfo userinfo = userinfoMapper.selectByPrimaryKey(realauth.getApplier().getId());
+            userinfo.setRealauthId(id);
+            userinfo.setBitState(userinfo.getBitState() + BitStatesUtils.OP_REAL_AUTH);
+            userinfo.setRealName(realauth.getRealname());
+            userinfo.setIdNumber(realauth.getIdNumber());
+            userinfoMapper.updateByPrimaryKey(userinfo);
+        }
+
     }
 
     public static String writePic(MultipartFile picFile) throws IOException {

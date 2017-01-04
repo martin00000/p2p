@@ -90,4 +90,13 @@
         WHERE usertype = #{userType}
     </select>
 
+    <select id="autoComplateList" resultType="hashmap">
+        SELECT
+            id,
+            username AS title
+        FROM logininfo
+        WHERE username LIKE concat(#{name}, '%') AND
+              usertype = 1
+    </select>
+
 </mapper>

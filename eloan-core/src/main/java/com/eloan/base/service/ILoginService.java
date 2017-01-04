@@ -3,6 +3,9 @@ package com.eloan.base.service;
 import com.eloan.base.Exception.LogicException;
 import com.eloan.base.domain.Logininfo;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * 登录注册
  */
@@ -41,5 +44,7 @@ public interface ILoginService {
      * 创建默认的管理员账号
      */
     void creatDefaultAdminUser();
+
+    List<Map<String, String>> autoComplate(String name);
 
 }
