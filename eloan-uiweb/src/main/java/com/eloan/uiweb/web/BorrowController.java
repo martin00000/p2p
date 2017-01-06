@@ -40,4 +40,22 @@ public class BorrowController extends BaseController {
         model.addAttribute("creditBorrowScore", BidConst.CREDIT_BORROW_SCORE);
         return "borrow";
     }
+
+    /**
+     * 显示申请借款页面
+     * @param model
+     * @return
+     */
+    @RequestMapping("/borrowInfo")
+    public String borrowInfo(Model model) {
+        Logininfo current = UserContext.getLogininfo();
+        Userinfo ui = this.userInfoService.getUserInfo(current.getId());
+        if (ui.isActiveBidRequest()) {
+            return "borrow_apply_result";
+        } else {
+            Account account = this.accountService.getAccount(current.getId());
+            model.addAttribute("account", account);
+            return "borrow_apply";
+        }
+    }
 }

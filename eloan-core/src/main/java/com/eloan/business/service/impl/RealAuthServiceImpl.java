@@ -2,6 +2,7 @@ package com.eloan.business.service.impl;
 
 import com.eloan.base.Exception.LogicException;
 import com.eloan.base.query.PageResult;
+import com.eloan.base.util.UploadFileUtils;
 import com.eloan.base.util.UserContext;
 import com.eloan.business.domain.Realauth;
 import com.eloan.business.domain.Userinfo;
@@ -12,18 +13,13 @@ import com.eloan.business.service.IRealAuthService;
 import com.eloan.business.util.BitStatesUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.*;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * <p>
@@ -37,8 +33,6 @@ import java.util.UUID;
 @Service
 public class RealAuthServiceImpl implements IRealAuthService {
 
-    // 允许的图片格式
-    private static final String[] IMAGE_TYPE = {".jpg", ".jpeg", ".png", ".gif", ".bmp"};
 
     @Autowired
     private RealauthMapper realauthMapper;
@@ -53,44 +47,9 @@ public class RealAuthServiceImpl implements IRealAuthService {
 
     @Override
     public String uploadPic(MultipartFile picFile) throws LogicException {
-        // 校验图片不能为空
-        if (picFile == null || picFile.isEmpty()) {
-            throw new LogicException("图片为空");
-        }
-        // 校验图片格式
-        boolean isLegal = false;
-        for (String type : IMAGE_TYPE) {
-            if (StringUtils.endsWithIgnoreCase(picFile.getOriginalFilename(), type)) {
-                isLegal = true;
-                break;
-            }
-        }
-        if (!isLegal) {
-            throw new LogicException("不支持的图片格式");
-        }
-        try {
-            // 校验是不是真的是图片
-            InputStream inputStream = picFile.getInputStream();
-            BufferedImage read = ImageIO.read(inputStream);
-            read.getWidth();
-
-            /*** 开始上传图片到服务器   ***/
-            return writePic(picFile);
-            // 获取文件名
-//            String originalFilename = picFile.getOriginalFilename();
-//            String extName = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
-//            FileOutputStream fos = new FileOutputStream("/images/" + UUID.randomUUID() + extName);
-//            BufferedInputStream bis =
-//            FastDFSClient fastDFSClient = new FastDFSClient("properties/client.conf");
-//            String url = fastDFSClient.uploadFile(picFile.getBytes(), extName);
-            // 把url响应给客户
-//            url = IMAGE_BASE_URL + url;
-//            return PictureResult.ok(url);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new LogicException("图片上传失败");
-        }
+        String picPath = UploadFileUtils.uploadPic(picFile, "/images/"
+                , "E:\\ideaworkspace\\p2p\\eloan-uiweb\\src\\main\\webapp\\images");
+        return picPath;
     }
 
     @Override
@@ -111,7 +70,7 @@ public class RealAuthServiceImpl implements IRealAuthService {
         List<Realauth> realauths = realauthMapper.selectAllByApplierTimeAndState(qo);
         PageInfo<Realauth> info = new PageInfo<>(realauths);
         long total = info.getTotal();
-        PageResult result = new PageResult((int)total, qo.getPageSize(), qo.getCurrentPage(), realauths);
+        PageResult result = new PageResult((int) total, qo.getPageSize(), qo.getCurrentPage(), realauths);
         return result;
 
     }
@@ -136,36 +95,4 @@ public class RealAuthServiceImpl implements IRealAuthService {
 
     }
 
-    public static String writePic(MultipartFile picFile) throws IOException {
-        String originalFilename = picFile.getOriginalFilename();
-        String extName = originalFilename.substring(originalFilename.lastIndexOf("."));
-        InputStream inputStream = null;
-        BufferedInputStream bufferedInputStream = null;
-        BufferedOutputStream bufferedOutputStream = null;
-        try {
-            inputStream = picFile.getInputStream();
-            bufferedInputStream = new BufferedInputStream(inputStream);
-            String picName = UUID.randomUUID().toString();
-            File f = new File("E:/ideaworkspace/p2p/eloan-uiweb/src/main/webapp/images/" + picName + extName);
-            f.createNewFile();
-            bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(f));
-            byte[] buffer = new byte[1024];
-            int copySize;
-            while ((copySize = bufferedInputStream.read(buffer)) > 0) {
-                bufferedOutputStream.write(buffer, 0, copySize);
-            }
-            return "/images/" + picName + extName;
-        } finally {
-            try {
-                if (bufferedInputStream != null)
-                    bufferedInputStream.close();
-                if (bufferedOutputStream != null)
-                    bufferedOutputStream.close();
-                if (inputStream != null)
-                    inputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }

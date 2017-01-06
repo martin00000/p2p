@@ -37,7 +37,6 @@ public class LoginController extends BaseController {
         } catch (Exception e) {
             json.setSuccess(false);
             json.setMsg(e.getMessage());
-            e.printStackTrace();
         }
         return json;
     }

@@ -1,17 +1,17 @@
 package com.eloan.business.service.impl;
 
-import com.eloan.base.Exception.LogicException;
+import com.eloan.base.domain.SystemDictionaryItem;
+import com.eloan.base.util.UploadFileUtils;
+import com.eloan.base.util.UserContext;
+import com.eloan.business.domain.Realauth;
 import com.eloan.business.domain.Userfile;
 import com.eloan.business.mapper.UserfileMapper;
 import com.eloan.business.service.IUserFileService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,43 +34,27 @@ public class IUserFileServiceImpl implements IUserFileService {
 
     @Override
     public void uploadFile(MultipartFile picFile) {
-        // 校验图片不能为空
-        if (picFile == null || picFile.isEmpty()) {
-            throw new LogicException("图片为空");
-        }
-        // 校验图片格式
-        boolean isLegal = false;
-        for (String type : IMAGE_TYPE) {
-            if (StringUtils.endsWithIgnoreCase(picFile.getOriginalFilename(), type)) {
-                isLegal = true;
-                break;
+        String path = UploadFileUtils.uploadPic(picFile, "/upload/"
+                , "E:/ideaworkspace/p2p/eloan-uiweb/src/main/webapp/upload/");
+        Userfile userfile = new Userfile();
+        userfile.setFile(path);
+        userfile.setState(Realauth.STATE_APPLY);
+        userfile.setApplier(UserContext.getLogininfo());
+        userfile.setApplyTime(new Date());
+        userfileMapper.insert(userfile);
+    }
+
+    @Override
+    public void updateFileTypes(Long[] id, Long[] fileTypeId) {
+        for(int i=0;i<id.length;i++){
+            Long ufid=id[i];
+            Userfile uf=this.userfileMapper.selectByPrimaryKey(ufid);
+            if(uf!=null){
+                SystemDictionaryItem item=new SystemDictionaryItem();
+                item.setId(fileTypeId[i]);
+                uf.setFileType(item);
+                this.userfileMapper.updateByPrimaryKey(uf);
             }
-        }
-        if (!isLegal) {
-            throw new LogicException("不支持的图片格式");
-        }
-        try {
-            // 校验是不是真的是图片
-            InputStream inputStream = picFile.getInputStream();
-            BufferedImage read = ImageIO.read(inputStream);
-            read.getWidth();
-
-            /*** 开始上传图片到服务器   ***/
-            String filePath = RealAuthServiceImpl.writePic(picFile);
-            // 获取文件名
-//            String originalFilename = picFile.getOriginalFilename();
-//            String extName = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
-//            FileOutputStream fos = new FileOutputStream("/images/" + UUID.randomUUID() + extName);
-//            BufferedInputStream bis =
-//            FastDFSClient fastDFSClient = new FastDFSClient("properties/client.conf");
-//            String url = fastDFSClient.uploadFile(picFile.getBytes(), extName);
-            // 把url响应给客户
-//            url = IMAGE_BASE_URL + url;
-//            return PictureResult.ok(url);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new LogicException("图片上传失败");
         }
     }
 }

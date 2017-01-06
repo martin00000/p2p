@@ -88,8 +88,8 @@
         <include refid="Full_Column_List"/>
         FROM vedioauth v LEFT JOIN logininfo ap ON v.applier_id = ap.id LEFT JOIN logininfo au ON v.auditor_id = au.id
         <where>
-            <if test="keyWord!=null">
-                AND ap.username LIKE concat(#{keyWord},'%')
+            <if test="keyword!=null">
+                AND ap.username LIKE concat(#{keyword},'%')
             </if>
             <if test="beginDate !=null">
                 AND v.applyTime &gt;= #{beginDate}

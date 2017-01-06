@@ -1,6 +1,8 @@
 package com.eloan.business.mapper;
 
 import com.eloan.business.domain.Userfile;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 public interface UserfileMapper {
@@ -44,5 +46,5 @@ public interface UserfileMapper {
      */
     int updateByPrimaryKey(Userfile record);
 
-    List<Userfile> selectByApplierId(Long applierId, boolean noType);
+    List<Userfile> selectByApplierId(@Param("applierId") Long applierId, @Param("noType") boolean noType);
 }

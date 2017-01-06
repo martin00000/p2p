@@ -45,8 +45,8 @@
 			form.ajaxSubmit(function(data){
 				if(data.success){
 					$.messager.alert("提示","审核成功!",function(){
-						window.location.href="/vedioAuth.do";
 					});
+                    document.location.reload();//当前页面
 				}else{
 					$.messager.alert("提示",data.msg);					
 				}
@@ -71,7 +71,7 @@
 					data:{"word":val},
 					success:function(data){
 						for(var i=0;i<data.length;i++){
-							$('<li><a class="logininfoItem" data-loginid="'+data[i].id+'" href="javascript:;">'+data[i].name+'</a></li>').appendTo($(".autocomplate"));
+							$('<li><a class="logininfoItem" data-loginid="'+data[i].id+'" href="javascript:;">'+data[i].title+'</a></li>').appendTo($(".autocomplate"));
 						}
 						$("#autocomplate").addClass("open");
 					}

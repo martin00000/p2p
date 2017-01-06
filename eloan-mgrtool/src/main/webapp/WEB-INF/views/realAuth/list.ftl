@@ -58,8 +58,8 @@
 			form.ajaxSubmit(function(data){
 				if(data.success){
 					$.messager.alert("提示","审核成功!",function(){
-						window.location.href="/realAuth.do";
 					});
+                    document.location.reload();//当前页面
 				}else{
 					$.messager.alert("提示",data.msg);
 				}

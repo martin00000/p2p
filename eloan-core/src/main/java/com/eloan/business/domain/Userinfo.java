@@ -8,180 +8,189 @@ import org.springframework.util.StringUtils;
 
 /**
  * 网站会员相关详细信息（前台用户）
- * 
+ *
  * @author Stef
  */
 @Alias("UserInfo")
 public class Userinfo extends BaseDomain {
-	private static final long serialVersionUID = -2194938919842714855L;
-	private int version;// 版本号
-	private Long bitState = 0L; // 位状态
-	private String realName; // 对应实名认证中的真实姓名
-	private String idNumber; // 对应实名认证中的身份证号
-	private String email; // 用户邮箱
-	private String phoneNumber = ""; // 手机号
-	private int authScore = 0;//用户当前认证分数
-	private Long realauthId;   //用户有效的实名认证对象
+    private static final long serialVersionUID = -2194938919842714855L;
+    private int version;// 版本号
+    private Long bitState = 0L; // 位状态
+    private String realName; // 对应实名认证中的真实姓名
+    private String idNumber; // 对应实名认证中的身份证号
+    private String email; // 用户邮箱
+    private String phoneNumber = ""; // 手机号
+    private int authScore = 0;//用户当前认证分数
+    private Long realauthId;   //用户有效的实名认证对象
 
-	// ====================== 会员基本资料 ===================
-	private SystemDictionaryItem incomeGrade; // 月收入
-	private SystemDictionaryItem marriage; // 婚姻情况
-	private SystemDictionaryItem kidCount; // 子女情况
-	private SystemDictionaryItem educationBackground; // 学历
-	private SystemDictionaryItem houseCondition; // 住房条件
+    // ====================== 会员基本资料 ===================
+    private SystemDictionaryItem incomeGrade; // 月收入
+    private SystemDictionaryItem marriage; // 婚姻情况
+    private SystemDictionaryItem kidCount; // 子女情况
+    private SystemDictionaryItem educationBackground; // 学历
+    private SystemDictionaryItem houseCondition; // 住房条件
 
-	public static Userinfo empty(Long id) {
-		Userinfo userinfo = new Userinfo();
-		userinfo.setId(id);
-		userinfo.setBitState(BitStatesUtils.OP_BASIC_INFO);
-		return userinfo;
-	}
+    public static Userinfo empty(Long id) {
+        Userinfo userinfo = new Userinfo();
+        userinfo.setId(id);
+        userinfo.setBitState(BitStatesUtils.OP_BASIC_INFO);
+        return userinfo;
+    }
 
-	public void addState(Long state) {
-		this.bitState = BitStatesUtils.addState(this.bitState, state);
-	}
+    public void addState(Long state) {
+        this.bitState = BitStatesUtils.addState(this.bitState, state);
+    }
 
-	public boolean getIsBindPhone() {
-		return BitStatesUtils.hasState(bitState, BitStatesUtils.OP_BIND_PHONE);
-	}
+    public boolean getIsBindPhone() {
+        return BitStatesUtils.hasState(bitState, BitStatesUtils.OP_BIND_PHONE);
+    }
 
-	public boolean getIsBindEmail() {
-		return BitStatesUtils.hasState(bitState, BitStatesUtils.OP_BIND_EMAIL);
-	}
+    public boolean getIsBindEmail() {
+        return BitStatesUtils.hasState(bitState, BitStatesUtils.OP_BIND_EMAIL);
+    }
 
-	public boolean getBaseInfo() {
-		return BitStatesUtils.hasState(bitState, BitStatesUtils.OP_BASE_INFO);
-	}
+    public boolean getBaseInfo() {
+        return BitStatesUtils.hasState(bitState, BitStatesUtils.OP_BASE_INFO);
+    }
 
-	public boolean getRealAuth() {
-		return BitStatesUtils.hasState(bitState, BitStatesUtils.OP_REAL_AUTH);
-	}
+    public boolean getRealAuth() {
+        return BitStatesUtils.hasState(bitState, BitStatesUtils.OP_REAL_AUTH);
+    }
 
-	public boolean getVedioAuth() {
-		return BitStatesUtils.hasState(bitState, BitStatesUtils.OP_VEDIO_AUTH);
-	}
+    public boolean getVedioAuth() {
+        return BitStatesUtils.hasState(bitState, BitStatesUtils.OP_VEDIO_AUTH);
+    }
 
-	/**
-	 * 获取用户真实名字的隐藏字符串，只显示姓氏
-	 *
-	 * @param realName
-	 *            真实名字
-	 * @return
-	 */
-	public String getAnonymousRealName() {
-		if (StringUtils.hasLength(realName)) {
-			int len = realName.length();
-			String replace = "";
-			replace += realName.charAt(0);
-			for (int i = 1; i < len; i++) {
-				replace += "*";
-			}
-			return replace;
-		}
-		return realName;
-	}
+    /**
+     * 是否当前有流程中的标的
+     *
+     * @return
+     */
+    public boolean isActiveBidRequest() {
+        return BitStatesUtils.hasState(this.bitState,
+                BitStatesUtils.OP_IS_ACTVIE_BIDREQUEST);
+    }
 
-	public int getVersion() {
-		return version;
-	}
+    /**
+     * 获取用户真实名字的隐藏字符串，只显示姓氏
+     *
+     * @param realName 真实名字
+     * @return
+     */
+    public String getAnonymousRealName() {
+        if (StringUtils.hasLength(realName)) {
+            int len = realName.length();
+            String replace = "";
+            replace += realName.charAt(0);
+            for (int i = 1; i < len; i++) {
+                replace += "*";
+            }
+            return replace;
+        }
+        return realName;
+    }
 
-	public void setVersion(int version) {
-		this.version = version;
-	}
+    public int getVersion() {
+        return version;
+    }
 
-	public Long getBitState() {
-		return bitState;
-	}
+    public void setVersion(int version) {
+        this.version = version;
+    }
 
-	public void setBitState(Long bitState) {
-		this.bitState = bitState;
-	}
+    public Long getBitState() {
+        return bitState;
+    }
 
-	public String getRealName() {
-		return realName;
-	}
+    public void setBitState(Long bitState) {
+        this.bitState = bitState;
+    }
 
-	public void setRealName(String realName) {
-		this.realName = realName;
-	}
+    public String getRealName() {
+        return realName;
+    }
 
-	public String getIdNumber() {
-		return idNumber;
-	}
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
 
-	public void setIdNumber(String idNumber) {
-		this.idNumber = idNumber;
-	}
+    public String getIdNumber() {
+        return idNumber;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setIdNumber(String idNumber) {
+        this.idNumber = idNumber;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 
-	public int getAuthScore() {
-		return authScore;
-	}
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
-	public void setAuthScore(int authScore) {
-		this.authScore = authScore;
-	}
+    public int getAuthScore() {
+        return authScore;
+    }
 
-	public Long getRealauthId() {
-		return realauthId;
-	}
+    public void setAuthScore(int authScore) {
+        this.authScore = authScore;
+    }
 
-	public void setRealauthId(Long realauthId) {
-		this.realauthId = realauthId;
-	}
+    public Long getRealauthId() {
+        return realauthId;
+    }
 
-	public SystemDictionaryItem getIncomeGrade() {
-		return incomeGrade;
-	}
+    public void setRealauthId(Long realauthId) {
+        this.realauthId = realauthId;
+    }
 
-	public void setIncomeGrade(SystemDictionaryItem incomeGrade) {
-		this.incomeGrade = incomeGrade;
-	}
+    public SystemDictionaryItem getIncomeGrade() {
+        return incomeGrade;
+    }
 
-	public SystemDictionaryItem getMarriage() {
-		return marriage;
-	}
+    public void setIncomeGrade(SystemDictionaryItem incomeGrade) {
+        this.incomeGrade = incomeGrade;
+    }
 
-	public void setMarriage(SystemDictionaryItem marriage) {
-		this.marriage = marriage;
-	}
+    public SystemDictionaryItem getMarriage() {
+        return marriage;
+    }
 
-	public SystemDictionaryItem getKidCount() {
-		return kidCount;
-	}
+    public void setMarriage(SystemDictionaryItem marriage) {
+        this.marriage = marriage;
+    }
 
-	public void setKidCount(SystemDictionaryItem kidCount) {
-		this.kidCount = kidCount;
-	}
+    public SystemDictionaryItem getKidCount() {
+        return kidCount;
+    }
 
-	public SystemDictionaryItem getEducationBackground() {
-		return educationBackground;
-	}
+    public void setKidCount(SystemDictionaryItem kidCount) {
+        this.kidCount = kidCount;
+    }
 
-	public void setEducationBackground(SystemDictionaryItem educationBackground) {
-		this.educationBackground = educationBackground;
-	}
+    public SystemDictionaryItem getEducationBackground() {
+        return educationBackground;
+    }
 
-	public SystemDictionaryItem getHouseCondition() {
-		return houseCondition;
-	}
+    public void setEducationBackground(SystemDictionaryItem educationBackground) {
+        this.educationBackground = educationBackground;
+    }
 
-	public void setHouseCondition(SystemDictionaryItem houseCondition) {
-		this.houseCondition = houseCondition;
-	}
+    public SystemDictionaryItem getHouseCondition() {
+        return houseCondition;
+    }
+
+    public void setHouseCondition(SystemDictionaryItem houseCondition) {
+        this.houseCondition = houseCondition;
+    }
 }

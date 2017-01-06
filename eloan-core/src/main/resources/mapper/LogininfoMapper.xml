@@ -96,7 +96,7 @@
             username AS title
         FROM logininfo
         WHERE username LIKE concat(#{name}, '%') AND
-              usertype = 1
+              usertype = 0
     </select>
 
 </mapper>
